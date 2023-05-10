@@ -1,0 +1,111 @@
+source ./secret.neomuttrc
+
+# email location
+set folder		= "${MAIL}"
+set smtp_url		= $my_smtp_url
+
+# auth
+set smtp_pass		= $my_smtp_pass
+set certificate_file	= "${XDG_DATA_HOME}/neomutt/certs"
+
+# email headers
+set realname		= $my_realname
+set from		= $my_from
+
+set spoolfile		= "+Inbox"
+set record		= "+Sent"
+set postponed		= "+Drafts"
+set trash		= "+Trash"
+mailboxes =Inbox =Sent =Drafts =Trash
+
+# cosmetic
+set help		= no	# no helpbar
+set sidebar_visible	= yes
+set sidebar_format	= "%D%?F? [%F]?%* %?N?%N/?%?S?%S?"
+set sidebar_width	= 20
+set date_format		= "%d/%m/%y %H:%M"
+set index_format	= "%Z %?X?A& ? %-20.25F %s %?M?(%M)? %> %D"
+set markers		= no	# no '+' on lines spanning multiple rows
+set status_format	= "-%r- %D [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b?Inc:%b?%?l? %l?]---(%?T?%T/?%s)-%>-(%P)---"
+
+# general
+set mail_check_stats	= yes		# periodically update information about number of unread emails etc
+set mark_old		= no		# don't mark unread messages as read just because I quit the program duh
+set forward_attachments = yes
+set sleep_time		= 0		# disable unnecessary delay
+set delete		= yes		# delete messages without confirmation
+set sort		= "reverse-date"
+set use_threads		= yes
+set wait_key		= no		# don't wait for a keypress after external command
+set fast_reply		= yes		# skip settin To and Subject when replying
+set forward_format	= "Fwd: %s"
+set forward_quote	= yes
+set include		= yes		# include a copy of the message I'm replying to
+set mail_check		= 60		# check for new mail every 60 seconds
+set header_cache	= "${XDG_CACHE_HOME}/neomutt/cache"
+set attribution_intro	= ""		# remove "on $date $sender wrote" at the beggining of replies
+set beep		= no
+set edit_headers	= yes		# edit headers along with the mail body
+set auto_edit		= yes		# skip :To and :Subject before writing an email
+set query_command	= "abook --datafile ${XDG_DATA_HOME}/abook/addressbook --mutt-query '%s'"
+set abort_key		= "<Esc>"	# don't forget to set $ESCDELAY = 0
+
+alternative_order text/plain text/enriched text/html
+
+# colorscheme
+source ./color.neomuttrc
+
+# show only certain fields of email headers
+ignore *
+unignore Date From To Cc Subject Thread-Topic
+hdr_order Date From To Cc Subject # sort header fields
+
+# --- KEYBINDS -------------------------------------
+
+# disable some bindings
+bind index,browser		H	noop
+bind index,pager		M	noop
+bind pager,index		d	noop
+bind attach,browser,index,pager	g	noop
+bind index,browser		h	noop
+
+# Moving around
+bind attach,browser,index	gg	first-entry
+bind attach,browser,index	G	last-entry
+bind index			k	previous-entry
+bind index			j	next-entry
+bind pager			gg	top
+bind pager			G	bottom
+bind pager			k	previous-line
+bind pager			j	next-line
+bind pager			h	exit
+
+# various
+bind index			l	display-message
+bind pager			H	display-toggle-weed
+bind index			q	quit
+bind pager			q	exit
+bind pager,index		dd	delete-message
+bind index			<space>	collapse-all
+bind editor			<Tab>	complete-query
+
+# Sidebar
+bind index,pager		\Ck	sidebar-prev
+bind index,pager		\Cj	sidebar-next
+bind index,pager		\Co	sidebar-open
+bind index,pager		B	sidebar-toggle-visible
+
+# Threads
+bind browser,pager,index	N	search-opposite
+bind pager,index		dT	delete-thread
+bind pager,index		dt	delete-subthread
+
+macro index,pager gi "<change-folder>=Inbox<enter>"
+macro index,pager gd "<change-folder>=Drafts<enter>"
+macro index,pager gt "<change-folder>=Trash<enter>"
+macro index,pager gs "<change-folder>=Sent<enter>"
+
+macro index,pager a "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode<return><pipe-message>abook --datafile ${XDG_DATA_HOME}/abook/addressbook --add-email<return><enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<return>"
+
+startup-hook '`mbsync -c ${XDG_CONFIG_HOME}/mbsync/mbsyncrc -a && sigdwmblocks 4`'
+shutdown-hook '`sigdwmblocks 4`'
