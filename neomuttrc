@@ -64,11 +64,11 @@ hdr_order Date From To Cc Subject # sort header fields
 # --- KEYBINDS -------------------------------------
 
 # disable some bindings
-bind index,browser		H	noop
-bind index,pager		M	noop
-bind pager,index		d	noop
-bind attach,browser,index,pager	g	noop
-bind index,browser		h	noop
+unbind index,browser			H
+unbind index,pager			M
+unbind pager,index			d
+unbind attach,browser,index,pager	g
+unbind index,browser			h
 
 # Moving around
 bind attach,browser,index	gg	first-entry
@@ -100,11 +100,6 @@ bind index,pager		B	sidebar-toggle-visible
 bind browser,pager,index	N	search-opposite
 bind pager,index		dT	delete-thread
 bind pager,index		dt	delete-subthread
-
-macro index,pager gi "<change-folder>=Inbox<enter>"
-macro index,pager gd "<change-folder>=Drafts<enter>"
-macro index,pager gt "<change-folder>=Trash<enter>"
-macro index,pager gs "<change-folder>=Sent<enter>"
 
 macro index,pager a "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode<return><pipe-message>abook --datafile ${XDG_DATA_HOME}/abook/addressbook --add-email<return><enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<return>"
 
