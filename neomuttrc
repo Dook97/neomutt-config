@@ -49,6 +49,7 @@ set edit_headers	= yes		# edit headers along with the mail body
 set auto_edit		= yes		# skip :To and :Subject before writing an email
 set query_command	= "abook --datafile ${XDG_DATA_HOME}/abook/addressbook --mutt-query '%s'"
 set abort_key		= "<Esc>"	# don't forget to set $ESCDELAY = 0
+set wrap		= 90		# wrap long lines
 
 alternative_order text/plain text/enriched text/html
 
@@ -108,4 +109,4 @@ macro index,pager gs "<change-folder>=Sent<enter>"
 macro index,pager a "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode<return><pipe-message>abook --datafile ${XDG_DATA_HOME}/abook/addressbook --add-email<return><enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<return>"
 
 startup-hook '`mbsync -c ${XDG_CONFIG_HOME}/mbsync/mbsyncrc -a && sigdwmblocks 4`'
-shutdown-hook '`sigdwmblocks 4`'
+shutdown-hook '`setsid -f bash -c "pwait neomutt; sigdwmblocks 4" >/dev/null 2>&1`'
