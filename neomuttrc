@@ -24,7 +24,7 @@ set sidebar_visible	= yes
 set sidebar_format	= "%D%?F? [%F]?%* %?N?%N/?%?S?%S?"
 set sidebar_width	= 20
 set date_format		= "%d/%m/%y %H:%M"
-set index_format	= "%Z  %-20.30n %s %?M?(%M)? %> %D"
+set index_format	= "%Z  %-25n %s %?M?(%M)? %> %D"
 set markers		= no		# no '+' on lines spanning multiple rows
 set status_format	= "-%r- %D [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b?Inc:%b?%?l? %l?]---(%?T?%T/?%s)-%>-(%P)---"
 
@@ -103,5 +103,5 @@ bind pager,index		dt	delete-subthread
 
 macro index,pager a "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode<return><pipe-message>abook --datafile ${XDG_DATA_HOME}/abook/addressbook --add-email<return><enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<return>"
 
-startup-hook '`mbsync -c ${XDG_CONFIG_HOME}/mbsync/mbsyncrc -a; sigdwmblocks 4`'
+startup-hook '`mbsync -c ${XDG_CONFIG_HOME}/mbsync/mbsyncrc -a >/dev/null 2>&1; sigdwmblocks 4`'
 shutdown-hook '`setsid -f bash -c "pwait neomutt; sigdwmblocks 4" >/dev/null 2>&1`'
