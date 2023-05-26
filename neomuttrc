@@ -1,7 +1,7 @@
 source ./secret.neomuttrc
 
 # email location
-set folder		= "${MAIL}"
+set folder		= "${MAILPATH}"
 set smtp_url		= $my_smtp_url
 
 # auth
