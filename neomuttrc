@@ -37,7 +37,7 @@ set delete		= yes		# delete messages without confirmation
 set sort		= "reverse-date"
 set use_threads		= yes
 set wait_key		= no		# don't wait for a keypress after external command
-set fast_reply		= yes		# skip settin To and Subject when replying
+set fast_reply		= yes		# automatically fill To and Subject when replying
 set forward_format	= "Fwd: %s"
 set forward_quote	= yes
 set include		= yes		# include a copy of the message I'm replying to
@@ -103,5 +103,5 @@ bind pager,index		dt	delete-subthread
 
 macro index,pager a "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode<return><pipe-message>abook --datafile ${XDG_DATA_HOME}/abook/addressbook --add-email<return><enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<return>"
 
-startup-hook '`mbsync -c ${XDG_CONFIG_HOME}/mbsync/mbsyncrc -a >/dev/null 2>&1; sigdwmblocks 4`'
+# startup-hook '`mbsync -c ${XDG_CONFIG_HOME}/mbsync/mbsyncrc -a >/dev/null 2>&1; sigdwmblocks 4`'
 shutdown-hook '`setsid -f bash -c "pwait neomutt; sigdwmblocks 4" >/dev/null 2>&1`'
