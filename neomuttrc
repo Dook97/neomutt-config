@@ -12,6 +12,20 @@ set certificate_file	= "${XDG_DATA_HOME}/neomutt/certs"
 set realname		= $my_realname
 set from		= $my_from
 
+# This variable specifies notmuch query type, supported types: 'threads' and
+# 'messages'.
+set nm_query_type = threads
+
+# Exclude messages tagged as trash from notmuch search by default
+set nm_exclude_tags = trash
+
+# When set, mutt will use the first virtual mailbox (see virtual-mailboxes)
+# as a spoolfile.
+set virtual_spoolfile = yes
+
+# virtual-mailboxes description notmuch-URI
+virtual-mailboxes "All" "notmuch://?query=(folder:Inbox or folder:Sent) and not folder:Trash"
+
 set spoolfile		= "+Inbox"
 set record		= "+Sent"
 set postponed		= "+Drafts"
