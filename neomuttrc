@@ -64,6 +64,11 @@ set auto_edit		= yes		# skip :To and :Subject before writing an email
 set query_command	= "abook --datafile ${XDG_DATA_HOME}/abook/addressbook --mutt-query '%s'"
 set abort_key		= "<Esc>"	# don't forget to set $ESCDELAY = 0
 set wrap		= 90		# wrap long lines
+set hostname		= $my_hostname  # default hostname for easier sending of mail inside domain
+
+# GPG encryption
+set pgp_self_encrypt = yes
+set pgp_default_key  = $my_pgpid
 
 alternative_order text/plain text/enriched text/html
 
