@@ -65,6 +65,7 @@ set query_command	= "abook --datafile ${XDG_DATA_HOME}/abook/addressbook --mutt-
 set abort_key		= "<Esc>"	# don't forget to set $ESCDELAY = 0
 set wrap		= 90		# wrap long lines
 set hostname		= $my_hostname  # default hostname for easier sending of mail inside domain
+set nm_record		= yes		# add sent message immediately to notmuch database
 
 # GPG encryption
 set pgp_self_encrypt = yes
