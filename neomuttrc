@@ -30,7 +30,7 @@ set spoolfile		= "+Inbox"
 set record		= "+Sent"
 set postponed		= "+Drafts"
 set trash		= "+Trash"
-mailboxes =Inbox =Sent =Drafts =Trash
+mailboxes =Inbox =Sent =Drafts =Trash =Spam
 
 # cosmetic
 set help		= no		# no helpbar
