@@ -68,8 +68,10 @@ set hostname		= $my_hostname  # default hostname for easier sending of mail insi
 set nm_record		= yes		# add sent message immediately to notmuch database
 
 # GPG encryption
-set pgp_self_encrypt = yes
-set pgp_default_key  = $my_pgpid
+set pgp_default_key	= $my_pgpid
+set pgp_self_encrypt	= yes
+set crypt_auto_sign	= yes
+set crypt_opportunistic_encrypt	= yes
 
 alternative_order text/plain text/enriched text/html
 
