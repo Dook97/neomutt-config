@@ -16,15 +16,12 @@ set from		= $my_from
 # 'messages'.
 set nm_query_type = threads
 
-# Exclude messages tagged as trash from notmuch search by default
-set nm_exclude_tags = trash
-
 # When set, mutt will use the first virtual mailbox (see virtual-mailboxes)
 # as a spoolfile.
 set virtual_spoolfile = yes
 
 # virtual-mailboxes description notmuch-URI
-virtual-mailboxes "All" "notmuch://?query=not (folder:Spam or folder:Trash or folder:Spam)"
+virtual-mailboxes "All" "notmuch://?query=not (folder:Trash or folder:Spam)"
 
 set spoolfile		= "+Inbox"
 set record		= "+Sent"
@@ -66,6 +63,9 @@ set abort_key		= "<Esc>"	# don't forget to set $ESCDELAY = 0
 set wrap		= 90		# wrap long lines
 set hostname		= $my_hostname  # default hostname for easier sending of mail inside domain
 set nm_record		= yes		# add sent message immediately to notmuch database
+set attach_save_dir	= "~/downloads"
+
+subjectrx "^([Rr]e:? *)*[Rr]e:?" "Re:%R" # hide multiple Re:s in index
 
 # GPG encryption
 set pgp_default_key	= $my_pgpid
