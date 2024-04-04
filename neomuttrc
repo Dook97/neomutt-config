@@ -15,14 +15,12 @@ alternates $my_alternates
 set sendmail = "/usr/bin/msmtp"
 
 # use different sender accounts based on from header
-send2-hook . 'set sendmail = "/usr/bin/msmtp"' # default
-# for each sender address define a hook of this form:
+# my specific config is hidden for privacy reasons, but the template looks like this:
 # send2-hook '~f "ADDRESS"' 'set sendmail = "/usr/bin/msmtp -f ADDRESS"'
-source ./sender_hooks.neomuttrc # ...mine are ommited to protect my addresses
+send2-hook . 'set sendmail = "/usr/bin/msmtp"' # default
+source ./sender_hooks.neomuttrc
 
-# This variable specifies notmuch query type, supported types: 'threads' and
-# 'messages'.
-# set nm_query_type = threads
+set nm_exclude_tags = "spam,trash"
 
 # When set, mutt will use the first virtual mailbox (see virtual-mailboxes)
 # as a spoolfile.
@@ -32,12 +30,19 @@ set postponed		= "+Drafts"
 # virtual-mailboxes description notmuch-URI
 source ./mailboxes.neomuttrc
 
+# store sent messages to physical "Sent" dirs based on from header
+# my specific config is hidden for privacy reasons, but the template looks like this:
+#
+# set record = DEFAULT_PATH
+# fcc-hook "~f ADDRESS" CUSTOM_PATH
+source ./fcc_hooks.neomuttrc
+
 # cosmetic
 set sidebar_visible	= yes
 set sidebar_format	= "%D%?F? [%F]?%* %?N?%N/?%?S?%S?"
 set sidebar_width	= 20
 set date_format		= "%d/%m/%y %H:%M"
-set index_format	= "%Z  %-25n %s %?M?(%M)? %*  %D"
+set index_format	= "%Z  %-30n %s %?M?(%M)? %*  %D"
 set markers		= no		# no '+' on lines spanning multiple rows
 set status_format	= "-%r- %D [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b?Inc:%b?%?l? %l?]---(%?T?%T/?%s)-%>-(%P)---"
 
@@ -47,7 +52,7 @@ set mail_check_stats	= yes		# periodically update information about number of un
 set mark_old		= no		# don't mark unread messages as read just because I quit the program duh
 set forward_attachments = yes
 set sleep_time		= 0		# disable unnecessary delay
-set delete		= yes		# delete messages without confirmation
+set delete		= no		# dont physically delete messages, just tag them
 set sort		= "reverse-date"
 set use_threads		= yes
 set wait_key		= no		# don't wait for a keypress after external command
@@ -67,10 +72,8 @@ set wrap		= 100		# wrap long lines
 set hostname		= $my_hostname  # default hostname for easier sending of mail inside domain
 set nm_record		= yes		# add sent message immediately to notmuch database
 set attach_save_dir	= "~/downloads"
-set reverse_name	= yes
-set reverse_real_name	= no
-
-subjectrx "^([Rr]e:? *)*[Rr]e:?" "Re:%R" # hide multiple Re:s in index
+set reverse_name	= yes		# reply as whoever the message was to
+set hide_missing	= no		# in thread view indicate missing messages
 
 # GPG encryption
 set pgp_default_key	= $my_pgpid
@@ -113,10 +116,15 @@ bind index			l	display-message
 bind pager			H	display-toggle-weed
 bind index			q	quit
 bind pager			q	exit
-bind pager,index		dd	delete-message
 bind index			<space>	collapse-all
 bind editor			<Tab>	complete-query
 bind index,pager		S	vfolder-from-query
+bind index			T	tag-thread
+bind index,pager		c	modify-tags
+
+# dont delete messages, just tag them as trash
+macro index d "<modify-tags>+trash<enter>"
+macro index u "<modify-tags>-trash<enter>"
 
 # Sidebar
 bind index,pager		\Ck	sidebar-prev
@@ -126,7 +134,8 @@ bind index,pager		B	sidebar-toggle-visible
 
 # Threads
 bind browser,pager,index	p	search-opposite
-bind pager,index		dT	delete-thread
-bind pager,index		dt	delete-subthread
 
 macro index,pager a "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode<return><pipe-message>abook --datafile ${XDG_DATA_HOME}/abook/addressbook --add-email<return><enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<return>"
+
+# on entering folder go to the first entry, not the first unread
+folder-hook . push <first-entry>

@@ -26,6 +26,7 @@ color index_flags	yellow		default
 color index		color39		default	~O
 color index	bold	color229	color22	~T
 color index		color240	default	~D
+color index		color240	default	'~Y trash'
 color hdrdefault	color30		default
 color header		color132	default	'^date:'
 color header		color153	default	'^(to|cc|bcc):'
@@ -34,3 +35,6 @@ color header		color178	default	'^subject:'
 color header		color31		default	'^user-agent:'
 color header		color29		default	'^reply-to:'
 color sidebar_highlight	bold yellow default
+
+folder-hook . color "index color240 default '~Y trash'"
+folder-hook -noregex "Trash" uncolor "index '~Y trash'"
