@@ -1,14 +1,14 @@
 source ./secret.neomuttrc
 
 # email location
-set folder		= "${MAILPATH}"
+set folder = "${MAILPATH}"
 
 # auth
-set certificate_file	= "${XDG_DATA_HOME}/neomutt/certs"
+set certificate_file = "${XDG_DATA_HOME}/neomutt/certs"
 
 # email headers
-set realname		= $my_realname
-set from		= $my_from
+set realname = $my_realname
+set from = $my_from
 alternates $my_alternates
 
 # SMTP client
@@ -24,8 +24,8 @@ set nm_exclude_tags = "spam,trash"
 
 # When set, mutt will use the first virtual mailbox (see virtual-mailboxes)
 # as a spoolfile.
-set virtual_spoolfile	= yes
-set postponed		= "+Drafts"
+set virtual_spoolfile = yes
+set postponed = "+Drafts"
 
 # virtual-mailboxes description notmuch-URI
 source ./mailboxes.neomuttrc
@@ -38,48 +38,49 @@ source ./mailboxes.neomuttrc
 source ./fcc_hooks.neomuttrc
 
 # cosmetic
-set sidebar_visible	= yes
-set sidebar_format	= "%D%?F? [%F]?%* %?N?%N/?%?S?%S?"
-set sidebar_width	= 20
-set date_format		= "%d/%m/%y %H:%M"
-set index_format	= "%Z  %-30n %s %?M?(%M)? %*  %D"
-set markers		= no		# no '+' on lines spanning multiple rows
-set status_format	= "-%r- %D [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b?Inc:%b?%?l? %l?]---(%?T?%T/?%s)-%>-(%P)---"
+set sidebar_visible = yes
+set sidebar_format  = "%D%?F? [%F]?%* %?N?%N/?%?S?%S?"
+set sidebar_width   = 20
+set date_format     = "%d/%m/%y %H:%M"
+set index_format    = "%Z  %-30n %s %?M?(%M)? %*  %D"
+set markers         = no                        # no '+' on lines spanning multiple rows
+set status_format   = "-%r- %D [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b?Inc:%b?%?l? %l?]---(%?T?%T/?%s)-%>-(%P)---"
 
 # general
-set help		= no
-set mail_check_stats	= yes		# periodically update information about number of unread emails etc
-set mark_old		= no		# don't mark unread messages as read just because I quit the program duh
+set help                = yes
+set mail_check_stats    = yes                   # periodically update information about number of unread emails etc
+set mark_old            = no                    # don't mark unread messages as read just because I quit the program duh
 set forward_attachments = yes
-set sleep_time		= 0		# disable unnecessary delay
-set delete		= no		# dont physically delete messages, just tag them
-set sort		= "reverse-date"
-set use_threads		= yes
-set wait_key		= no		# don't wait for a keypress after external command
-set fast_reply		= yes		# automatically fill To and Subject when replying
-set forward_format	= "Fwd: %s"
-set forward_quote	= yes
-set include		= yes		# include a copy of the message I'm replying to
-set mail_check		= 60		# check for new mail every 60 seconds
-set header_cache	= "${XDG_CACHE_HOME}/neomutt/cache"
-set attribution_intro	= ""		# remove "on $date $sender wrote" at the beggining of replies
-set beep		= no
-set edit_headers	= yes		# edit headers along with the mail body
-set auto_edit		= yes		# skip :To and :Subject before writing an email
-set query_command	= "abook --datafile ${XDG_DATA_HOME}/abook/addressbook --mutt-query '%s'"
-set abort_key		= "<Esc>"	# don't forget to set $ESCDELAY = 0
-set wrap		= 100		# wrap long lines
-set hostname		= $my_hostname  # default hostname for easier sending of mail inside domain
-set nm_record		= yes		# add sent message immediately to notmuch database
-set attach_save_dir	= "~/downloads"
-set reverse_name	= yes		# reply as whoever the message was to
-set hide_missing	= no		# in thread view indicate missing messages
+set sleep_time          = 0                     # disable unnecessary delay
+set delete              = no                    # dont physically delete messages, just tag them
+set sort                = "reverse-date"
+set use_threads         = yes
+set wait_key            = no                    # don't wait for a keypress after external command
+set fast_reply          = yes                   # automatically fill To and Subject when replying
+set forward_format      = "Fwd: %s"
+set forward_quote       = yes
+set include             = yes                   # include a copy of the message I'm replying to
+set mail_check          = 60                    # check for new mail every 60 seconds
+set header_cache        = "${XDG_CACHE_HOME}/neomutt/cache"
+set attribution_intro   = ""                    # remove "on $date $sender wrote" at the beggining of replies
+set beep                = no
+set edit_headers        = yes                   # edit headers along with the mail body
+set auto_edit           = yes                   # skip :To and :Subject before writing an email
+set query_command       = "abook --datafile ${XDG_DATA_HOME}/abook/addressbook --mutt-query '%s'"
+set abort_key           = "<Esc>"               # don't forget to set $ESCDELAY = 0key
+set wrap                = 100                   # wrap long lines
+set hostname            = $my_hostname          # default hostname for easier sending of mail inside domain
+set nm_record           = yes                   # add sent message immediately to notmuch database
+set attach_save_dir     = "~/downloads"
+set reverse_name        = yes                   # reply as whoever the message was to
+set hide_missing        = no                    # in thread view indicate missing messages
 
 # GPG encryption
-set pgp_default_key	= $my_pgpid
-set pgp_self_encrypt	= yes
-set crypt_auto_sign	= yes
-set crypt_opportunistic_encrypt	= yes
+set pgp_default_key             = $my_pgpid
+set pgp_self_encrypt            = yes
+set crypt_auto_sign             = yes
+set crypt_opportunistic_encrypt = yes
+set crypt_use_gpgme             = yes
 
 alternative_order text/plain text/enriched text/html
 
@@ -94,46 +95,46 @@ hdr_order Date From To Cc Subject # sort header fields
 # --- KEYBINDS -------------------------------------
 
 # disable some bindings
-unbind index,browser			H
-unbind index,pager			M
-unbind pager,index			d
-unbind attach,browser,index,pager	g
-unbind index,browser			h
+unbind index,browser                     H
+unbind index,pager                       M
+unbind pager,index                       d
+unbind attach,browser,index,pager        g
+unbind index,browser                     h
 
 # Moving around
-bind attach,browser,index	gg	first-entry
-bind attach,browser,index	G	last-entry
-bind index			k	previous-entry
-bind index			j	next-entry
-bind pager			gg	top
-bind pager			G	bottom
-bind pager			k	previous-line
-bind pager			j	next-line
-bind pager			h	exit
+bind attach,browser,index                gg         first-entry
+bind attach,browser,index                G          last-entry
+bind index                               k          previous-entry
+bind index                               j          next-entry
+bind pager                               gg         top
+bind pager                               G          bottom
+bind pager                               k          previous-line
+bind pager                               j          next-line
+bind pager                               h          exit
 
-# various
-bind index			l	display-message
-bind pager			H	display-toggle-weed
-bind index			q	quit
-bind pager			q	exit
-bind index			<space>	collapse-all
-bind editor			<Tab>	complete-query
-bind index,pager		S	vfolder-from-query
-bind index			T	tag-thread
-bind index,pager		c	modify-tags
+#various
+bind index                               l          display-message
+bind pager                               H          display-toggle-weed
+bind index                               q          quit
+bind pager                               q          exit
+bind index                               <space>    collapse-all
+bind editor                              <Tab>      complete-query
+bind index,pager                         S          vfolder-from-query
+bind index                               T          tag-thread
+bind index,pager                         c          modify-tags
 
 # dont delete messages, just tag them as trash
 macro index d "<modify-tags>+trash<enter>"
 macro index u "<modify-tags>-trash<enter>"
 
 # Sidebar
-bind index,pager		\Ck	sidebar-prev
-bind index,pager		\Cj	sidebar-next
-bind index,pager		\Co	sidebar-open
-bind index,pager		B	sidebar-toggle-visible
+bind index,pager  \Ck sidebar-prev
+bind index,pager  \Cj sidebar-next
+bind index,pager  \Co sidebar-open
+bind index,pager  B sidebar-toggle-visible
 
 # Threads
-bind browser,pager,index	p	search-opposite
+bind browser,pager,index p search-opposite
 
 macro index,pager a "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode<return><pipe-message>abook --datafile ${XDG_DATA_HOME}/abook/addressbook --add-email<return><enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<return>"
 
