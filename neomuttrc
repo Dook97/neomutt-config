@@ -73,11 +73,14 @@ set hostname            = $my_hostname          # default hostname for easier se
 set nm_record           = yes                   # add sent message immediately to notmuch database
 set attach_save_dir     = "~/downloads"
 set reverse_name        = yes                   # reply as whoever the message was to
+set reverse_real_name   = no                    # ...but don't copy the "real name" part - people get it wrong often
 set hide_missing        = no                    # in thread view indicate missing messages
 
-# GPG encryption
+# crypto (PGP & S/MIME)
 set pgp_default_key             = $my_pgpid
+set smime_default_key           = $my_smimeid
 set pgp_self_encrypt            = yes
+set smime_self_encrypt          = yes
 set crypt_auto_sign             = yes
 set crypt_opportunistic_encrypt = yes
 set crypt_use_gpgme             = yes
