@@ -7,7 +7,7 @@ set folder = "${MAILPATH}"
 set certificate_file = "${XDG_DATA_HOME}/neomutt/certs"
 
 # email headers
-set realname = $my_realname
+set real_name = $my_realname
 set from = $my_from
 alternates $my_alternates
 
@@ -21,10 +21,11 @@ send2-hook . 'set sendmail = "/usr/bin/msmtp"' # default
 source ./sender_hooks.neomuttrc
 
 set nm_exclude_tags = "spam,trash"
+set nm_query_type = "threads"
 
 # When set, mutt will use the first virtual mailbox (see virtual-mailboxes)
 # as a spoolfile.
-set virtual_spoolfile = yes
+set virtual_spool_file = yes
 set postponed = "+Drafts"
 
 # virtual-mailboxes description notmuch-URI
@@ -47,7 +48,7 @@ set markers         = no                        # no '+' on lines spanning multi
 set status_format   = "-%r- %D [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b?Inc:%b?%?l? %l?]---(%?T?%T/?%s)-%>-(%P)---"
 
 # general
-set help                = yes
+set help                = no
 set mail_check_stats    = yes                   # periodically update information about number of unread emails etc
 set mark_old            = no                    # don't mark unread messages as read just because I quit the program duh
 set forward_attachments = yes
@@ -82,7 +83,7 @@ set smime_default_key           = $my_smimeid
 set pgp_self_encrypt            = yes
 set smime_self_encrypt          = yes
 set crypt_auto_sign             = yes
-set crypt_opportunistic_encrypt = yes
+set crypt_opportunistic_encrypt = no
 set crypt_use_gpgme             = yes
 
 alternative_order text/plain text/enriched text/html
