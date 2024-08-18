@@ -21,7 +21,8 @@ send2-hook . 'set sendmail = "/usr/bin/msmtp"' # default
 source ./sender_hooks.neomuttrc
 
 set nm_exclude_tags = "spam,trash"
-set nm_query_type = "threads"
+set nm_query_type = "messages"
+folder-hook . 'set nm_query_type="messages"'
 
 # When set, mutt will use the first virtual mailbox (see virtual-mailboxes)
 # as a spoolfile.
@@ -56,7 +57,7 @@ set mark_old            = no                    # don't mark unread messages as 
 set forward_attachments = yes
 set sleep_time          = 0                     # disable unnecessary delay
 set delete              = no                    # dont physically delete messages, just tag them
-set sort                = "reverse-date"
+set sort                = "reverse-last-date"
 set use_threads         = yes
 set wait_key            = no                    # don't wait for a keypress after external command
 set fast_reply          = yes                   # automatically fill To and Subject when replying
@@ -106,6 +107,7 @@ unbind index,pager                       M
 unbind pager,index                       d
 unbind attach,browser,index,pager        g
 unbind index,browser                     h
+unbind index,pager                       r
 
 # Moving around
 bind attach,browser,index                gg         first-entry
@@ -125,9 +127,9 @@ bind index                               q          quit
 bind pager                               q          exit
 bind index                               <space>    collapse-all
 bind editor                              <Tab>      complete-query
-bind index,pager                         S          vfolder-from-query
 bind index                               T          tag-thread
 bind index,pager                         c          modify-tags
+bind index,pager                         r          group-reply
 
 # dont delete messages, just tag them as trash
 macro index d "<modify-tags>+trash<enter>"
@@ -142,7 +144,18 @@ bind index,pager  B sidebar-toggle-visible
 # Threads
 bind browser,pager,index p search-opposite
 
-macro index,pager a "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode<return><pipe-message>abook --datafile ${XDG_DATA_HOME}/abook/addressbook --add-email<return><enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<return>"
+macro index,pager a "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode<return>\
+	<pipe-message>abook --datafile ${XDG_DATA_HOME}/abook/addressbook --add-email<return>\
+	<enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<return>"\
+	"add sender to abook database"
+
+macro index,pager S "<enter-command>set nm_query_type='threads'<return><vfolder-from-query>"\
+	"notmuch search including whole threads"
+
+macro index,pager E "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode<return>\
+	<pipe-message>nvim -<return>\
+	<enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<return>"\
+	"show decoded message in editor"
 
 # on entering folder go to the first entry, not the first unread
 folder-hook . push <first-entry>
