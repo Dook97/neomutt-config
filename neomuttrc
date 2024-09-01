@@ -46,7 +46,7 @@ set sidebar_component_depth = 1
 set sidebar_format  = "%D%?F? [%F]?%* %?N?%N/?%?S?%S?"
 set sidebar_width   = 20
 set date_format     = "%d/%m/%y %H:%M"
-set index_format    = " %-35n %s %?M?(%M)? %*  %D"
+set index_format    = " %-25.25n %s %?M?(%M)? %*  %D"
 set markers         = no                        # no '+' on lines spanning multiple rows
 set status_format   = "-%r- %D [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b?Inc:%b?%?l? %l?]---(%?T?%T/?%s)-%>-(%P)---"
 
@@ -56,7 +56,8 @@ set mail_check_stats    = yes                   # periodically update informatio
 set mark_old            = no                    # don't mark unread messages as read just because I quit the program duh
 set forward_attachments = yes
 set sleep_time          = 0                     # disable unnecessary delay
-set delete              = no                    # dont physically delete messages, just tag them
+folder-hook !"Trash" set delete = no            # don't physically delete messages, just tag them
+folder-hook  "Trash" set delete = yes           # ...unless we're in Trash
 set sort                = "reverse-last-date"
 set use_threads         = yes
 set wait_key            = no                    # don't wait for a keypress after external command
@@ -64,7 +65,7 @@ set fast_reply          = yes                   # automatically fill To and Subj
 set forward_format      = "Fwd: %s"
 set forward_quote       = yes
 set include             = yes                   # include a copy of the message I'm replying to
-set mail_check          = 60                    # check for new mail every 60 seconds
+set mail_check          = 1                     # check for new mail every second
 set header_cache        = "${XDG_CACHE_HOME}/neomutt/cache"
 set attribution_intro   = ""                    # remove "on $date $sender wrote" at the beggining of replies
 set beep                = no
@@ -79,6 +80,8 @@ set attach_save_dir     = "~/downloads"
 set reverse_name        = yes                   # reply as whoever the message was to
 set reverse_real_name   = no                    # ...but don't copy the "real name" part - people get it wrong often
 set hide_missing        = no                    # in thread view indicate missing messages
+set use_8bit_mime       = yes                   # use UTF-8 for outgoing emails
+set abort_backspace     = no
 
 # crypto (PGP & S/MIME)
 set pgp_default_key             = $my_pgpid
@@ -96,18 +99,20 @@ source ./color.neomuttrc
 
 # show only certain fields of email headers
 ignore *
-unignore Date From To Cc Subject Thread-Topic
-hdr_order Date From To Cc Subject # sort header fields
+unignore Date From To Cc Bcc Subject Thread-Topic
+hdr_order Date From To Cc Bcc Subject # sort header fields
 
 # --- KEYBINDS -------------------------------------
 
 # disable some bindings
 unbind index,browser                     H
 unbind index,pager                       M
+unbind index,pager                       L
 unbind pager,index                       d
 unbind attach,browser,index,pager        g
 unbind index,browser                     h
 unbind index,pager                       r
+unbind index,pager                       U
 
 # Moving around
 bind attach,browser,index                gg         first-entry
@@ -119,6 +124,10 @@ bind pager                               G          bottom
 bind pager                               k          previous-line
 bind pager                               j          next-line
 bind pager                               h          exit
+bind index,browser,pager                 \Ce        next-line
+bind index,browser,pager                 \Cy        previous-line
+bind attach,browser,pager,index          \Cu        half-up
+bind attach,browser,pager,index          \Cd        half-down
 
 #various
 bind index                               l          display-message
@@ -128,12 +137,14 @@ bind pager                               q          exit
 bind index                               <space>    collapse-all
 bind editor                              <Tab>      complete-query
 bind index                               T          tag-thread
-bind index,pager                         c          modify-tags
+bind index,pager                         c          modify-tags-then-hide
 bind index,pager                         r          group-reply
 
 # dont delete messages, just tag them as trash
-macro index d "<modify-tags>+trash<enter>"
-macro index u "<modify-tags>-trash<enter>"
+macro pager,index d "<modify-tags>+trash<enter>"
+macro pager,index u "<modify-tags>-trash<enter>"
+bind  pager,index D delete-message
+bind  pager,index U undelete-message
 
 # Sidebar
 bind index,pager  \Ck sidebar-prev
