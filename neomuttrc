@@ -82,6 +82,8 @@ set reverse_real_name   = no                    # ...but don't copy the "real na
 set hide_missing        = no                    # in thread view indicate missing messages
 set use_8bit_mime       = yes                   # use UTF-8 for outgoing emails
 set abort_backspace     = no
+set assumed_charset     = "utf-8"
+set allow_8bit          = yes
 
 # crypto (PGP & S/MIME)
 set pgp_default_key             = $my_pgpid
@@ -156,16 +158,16 @@ bind index,pager  B sidebar-toggle-visible
 bind browser,pager,index p search-opposite
 
 macro index,pager a "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode<return>\
-	<pipe-message>abook --datafile ${XDG_DATA_HOME}/abook/addressbook --add-email<return>\
-	<enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<return>"\
+<pipe-message>abook --datafile ${XDG_DATA_HOME}/abook/addressbook --add-email<return>\
+<enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<return>"\
 	"add sender to abook database"
 
 macro index,pager S "<enter-command>set nm_query_type='threads'<return><vfolder-from-query>"\
 	"notmuch search including whole threads"
 
 macro index,pager E "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode<return>\
-	<pipe-message>nvim -<return>\
-	<enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<return>"\
+<pipe-message>nvim -<return>\
+<enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<return>"\
 	"show decoded message in editor"
 
 # on entering folder go to the first entry, not the first unread
