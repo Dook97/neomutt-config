@@ -80,19 +80,20 @@ set attach_save_dir     = "~/downloads"
 set reverse_name        = yes                   # reply as whoever the message was to
 set reverse_real_name   = no                    # ...but don't copy the "real name" part - people get it wrong often
 set hide_missing        = no                    # in thread view indicate missing messages
-set use_8bit_mime       = yes                   # use UTF-8 for outgoing emails
 set abort_backspace     = no
-set assumed_charset     = "utf-8"
+set use_8bit_mime       = yes
 set allow_8bit          = yes
+set charset             = "utf-8"
 
 # crypto (PGP & S/MIME)
-set pgp_default_key             = $my_pgpid
-set smime_default_key           = $my_smimeid
-set pgp_self_encrypt            = yes
-set smime_self_encrypt          = yes
-set crypt_auto_sign             = yes
-set crypt_opportunistic_encrypt = no
-set crypt_use_gpgme             = yes
+set pgp_default_key              = $my_pgpid
+set smime_default_key            = $my_smimeid
+set pgp_self_encrypt             = yes
+set smime_self_encrypt           = yes
+set crypt_auto_sign              = yes
+set crypt_opportunistic_encrypt  = no
+set crypt_use_gpgme              = yes
+set crypt_protected_headers_read = no
 
 alternative_order text/plain text/enriched text/html
 
