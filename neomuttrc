@@ -15,10 +15,8 @@ alternates $my_alternates
 set sendmail = "/usr/bin/msmtp"
 
 # use different sender accounts based on from header
-# my specific config is hidden for privacy reasons, but the template looks like this:
-# send2-hook '~f "ADDRESS"' 'set sendmail = "/usr/bin/msmtp -f ADDRESS"'
-send2-hook . 'set sendmail = "/usr/bin/msmtp"' # default
-source ./sender_hooks.neomuttrc
+set use_envelope_from = yes
+unset envelope_from_address
 
 set nm_exclude_tags = "spam,trash"
 set nm_query_type = "messages"
@@ -40,15 +38,15 @@ source ./mailboxes.neomuttrc
 source ./fcc_hooks.neomuttrc
 
 # cosmetic
-set sidebar_visible = yes
-set sidebar_short_path = yes
+set sidebar_visible         = yes
+set sidebar_short_path      = yes
 set sidebar_component_depth = 1
-set sidebar_format  = "%D%?F? [%F]?%* %?N?%N/?%?S?%S?"
-set sidebar_width   = 20
-set date_format     = "%d/%m/%y %H:%M"
-set index_format    = " %-25.25n %s %?M?(%M)? %*  %D"
-set markers         = no                        # no '+' on lines spanning multiple rows
-set status_format   = "-%r- %D [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b?Inc:%b?%?l? %l?]---(%?T?%T/?%s)-%>-(%P)---"
+set sidebar_format          = "%D%?F? [%F]?%* %?N?%N/?%?S?%S?"
+set sidebar_width           = 20
+set date_format             = "%d/%m/%y %H:%M"
+set index_format            = " %-25.25n %s %?M?(%M)? %*  %D"
+set markers                 = no                        # no '+' on lines spanning multiple rows
+set status_format           = "-%r- %D [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b?Inc:%b?%?l? %l?]---(%?T?%T/?%s)-%>-(%P)---"
 
 # general
 set help                = no
@@ -126,7 +124,7 @@ bind pager                               gg         top
 bind pager                               G          bottom
 bind pager                               k          previous-line
 bind pager                               j          next-line
-bind pager                               h          exit
+bind pager,attach                        h          exit
 bind index,browser,pager                 \Ce        next-line
 bind index,browser,pager                 \Cy        previous-line
 bind attach,browser,pager,index          \Cu        half-up
