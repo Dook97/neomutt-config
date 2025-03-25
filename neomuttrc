@@ -15,10 +15,8 @@ alternates $my_alternates
 set sendmail = "/usr/bin/msmtp"
 
 # use different sender accounts based on from header
-# my specific config is hidden for privacy reasons, but the template looks like this:
-# send2-hook '~f "ADDRESS"' 'set sendmail = "/usr/bin/msmtp -f ADDRESS"'
-send2-hook . 'set sendmail = "/usr/bin/msmtp"' # default
-source ./sender_hooks.neomuttrc
+set use_envelope_from = yes
+unset envelope_from_address
 
 set nm_exclude_tags = "spam,trash"
 set nm_query_type = "messages"
