@@ -56,7 +56,7 @@ set forward_attachments = yes
 set sleep_time          = 0                     # disable unnecessary delay
 folder-hook !"Trash" set delete = no            # don't physically delete messages, just tag them
 folder-hook  "Trash" set delete = yes           # ...unless we're in Trash
-set sort                = "reverse-last-date"
+set sort                = "reverse-last-date"   # show newest at the top
 set use_threads         = yes
 set wait_key            = no                    # don't wait for a keypress after external command
 set fast_reply          = yes                   # automatically fill To and Subject when replying
@@ -163,6 +163,10 @@ macro index,pager a "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode
 
 macro index,pager S "<enter-command>set nm_query_type='threads'<return><vfolder-from-query>"\
 	"notmuch search including whole threads"
+
+macro index,pager I "<tag-pattern>~A<return>"
+
+# macro index,pager C "<change-vfolder>?/"
 
 macro index,pager E "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode<return>\
 <pipe-message>nvim -<return>\
